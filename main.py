@@ -43,7 +43,23 @@ def print_mood_chart(data, days=7):
         bar = "#" * bar_len
         print(f"{entry['date']} | {bar} ({entry['mood']})")
 
+def mood_weather(data, days=5):
+    recent = data[-days:]
+    if not recent:
+        print("Not enough data yet for a forecast.")
+        return
+    avg = sum(e["score"] for e in recent) / len(recent)
+    if avg >= 3:
+        print("Forecast: Sunny skies ahead — you've been in great spirits!")
+    elif avg >= 0:
+        print("Forecast: Partly cloudy — a mix of ups and downs.")
+    elif avg >= -2:
+        print("Forecast: Rainy patch — take it easy on yourself.")
+    else:
+        print("Forecast: Stormy stretch — maybe talk it through with someone you trust.")
+
 if __name__ == "__main__":
     log_mood()
     data = load_data()
     print_mood_chart(data)
+    mood_weather(data)
