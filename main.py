@@ -36,5 +36,14 @@ def log_mood():
     save_data(data)
     print(f"Logged: {mood} {info['face']}")
 
+def print_mood_chart(data, days=7):
+    print("\nYour mood over the last days:")
+    for entry in data[-days:]:
+        bar_len = max(entry["score"] + 5, 0)   # shifts range (-4..5) to (1..10)
+        bar = "#" * bar_len
+        print(f"{entry['date']} | {bar} ({entry['mood']})")
+
 if __name__ == "__main__":
     log_mood()
+    data = load_data()
+    print_mood_chart(data)
