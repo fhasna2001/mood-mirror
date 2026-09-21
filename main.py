@@ -39,7 +39,7 @@ def log_mood():
 def print_mood_chart(data, days=7):
     print("\nYour mood over the last days:")
     for entry in data[-days:]:
-        bar_len = max(entry["score"] + 5, 0)   # shifts range (-4..5) to (1..10)
+        bar_len = max(entry["score"] + 5, 0)
         bar = "#" * bar_len
         print(f"{entry['date']} | {bar} ({entry['mood']})")
 
@@ -58,8 +58,27 @@ def mood_weather(data, days=5):
     else:
         print("Forecast: Stormy stretch — maybe talk it through with someone you trust.")
 
+def main():
+    while True:
+        print("\n=== MoodMirror ===")
+        print("1) Log today's mood")
+        print("2) View mood chart")
+        print("3) Get mood weather forecast")
+        print("4) Quit")
+        choice = input("Choose an option: ").strip()
+
+        data = load_data()
+        if choice == "1":
+            log_mood()
+        elif choice == "2":
+            print_mood_chart(data)
+        elif choice == "3":
+            mood_weather(data)
+        elif choice == "4":
+            print("See you tomorrow!")
+            break
+        else:
+            print("Please choose 1-4.")
+
 if __name__ == "__main__":
-    log_mood()
-    data = load_data()
-    print_mood_chart(data)
-    mood_weather(data)
+    main()
